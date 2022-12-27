@@ -1,10 +1,16 @@
 import { Formik } from 'formik';
-import React from 'react'
+import React, { useState } from 'react'
 import Swal from 'sweetalert2';
+import app_config from '../../config';
 
 const AddArtwork = () => {
 
+    const url = app_config.api_url;
+
+    const [selImage, setSelImage] = useState("");
+
     const userSubmit = async (formdata) => {
+        formdata.image = selImage;
         console.log(formdata);
         // 1. Url
         // 2. Request Method
@@ -12,7 +18,7 @@ const AddArtwork = () => {
         // 4. Data Format
 
         // to send request on backend - to connect frontend and backend.
-        const response = await fetch('http://localhost:5000/user/add', {
+        const response = await fetch(url+'/art/add', {
             method : 'POST',
             body : JSON.stringify(formdata),
             headers : {
@@ -29,6 +35,21 @@ const AddArtwork = () => {
             })
         }
     }
+
+    const uploadImage = (e) => {
+        const file = e.target.files[0];
+        const fd = new FormData();
+        setSelImage(file.name);
+        fd.append("myfile", file);
+        fetch(url + "/util/uploadfile", {
+          method: "POST",
+          body: fd,
+        }).then((res) => {
+          if (res.status === 200) {
+            console.log("file uploaded");
+          }
+        });
+      };
 
   return (
     <div>
@@ -50,6 +71,8 @@ const AddArtwork = () => {
                                 <input className='form-control' id="price" onChange={handleChange} value={values.price} />
                                 <label>Category</label>
                                 <input className='form-control' id="category" onChange={handleChange} value={values.category} />
+                                <label>Upload File</label>
+                                <input className='form-control' onChange={uploadImage} type="file" />
                             <button type="submit" className='btn btn-primary mt-4'>Submit</button>
                             </form>
                         )}

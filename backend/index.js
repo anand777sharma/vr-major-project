@@ -1,7 +1,8 @@
 // importing express
 const express = require('express');
 const userRouter = require('./routers/userRouter');
-// const videoRouter = require('./routers/videoRouter');
+const artRouter = require('./routers/artRouter');
+const utilRouter = require('./routers/util');
 const cors = require('cors');
 
 // initiliazing express
@@ -15,7 +16,8 @@ app.use(express.json());
 app.use(cors( { origin : [ 'http://localhost:3000' ] } ));
 
 app.use('/user', userRouter);
-// app.use('/video', videoRouter);
+app.use('/art', artRouter);
+app.use('/util', utilRouter);
 
 // route
 app.get( '/', (req, res) => {

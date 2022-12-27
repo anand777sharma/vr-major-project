@@ -5,6 +5,7 @@ const mySchema = new Schema({
     discription : String,
     owner : Object,
     price : Number,
+    image: String,
     createdAt :Date,
     category: String
 })
