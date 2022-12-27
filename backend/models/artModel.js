@@ -6,8 +6,7 @@ const mySchema = new Schema({
     owner : Object,
     price : Number,
     createdAt :Date,
-    category:
-    File
+    category: String
 })
 
 module.exports = model( 'artsCollection', mySchema );

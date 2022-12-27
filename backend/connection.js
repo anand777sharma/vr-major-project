@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const databaseName = "julmttf200";
-const url = `mongodb+srv://mmm:mmm@cluster0.gvyon.mongodb.net/${databaseName}?retryWrites=true&w=majority`;
+const databaseName = "ArtEvolve";
+const url = `mongodb+srv://root:root@cluster0.82p5mzf.mongodb.net/${databaseName}?retryWrites=true&w=majority`;
 
 // connect to database
 // async function - returns a promise

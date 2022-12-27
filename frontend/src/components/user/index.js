@@ -1,8 +1,10 @@
 import React from 'react'
-
+import Header from '../user/Header';
 const User = () => {
   return (
-    <div>User</div>
+    <div>User
+       <Header />
+    </div>
   )
 }
 

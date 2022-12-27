@@ -9,6 +9,12 @@ import User from './components/user';
 import AdminProfile from './components/admin/Profile';
 import UserProfile from './components/user/Profile';
 import Home from './components/main/Home';
+import Dashboard from './components/admin/Dashboard';
+// 
+import ManageUser from './components/admin/ManageUser';
+// 
+import AddArtwork from './components/user/AddArtwork';
+import ManageArtwork from './components/user/ManageArtwork';
 
 function App() {
   return (
@@ -25,11 +31,17 @@ function App() {
           
           <Route element={<Admin />} path="admin">
             <Route path="pofile" element={<AdminProfile />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            {/* <Route path="header" element={<Header />} /> */}
+            <Route path="manageUser" element={<ManageUser />} />
           
           </Route>
           
           <Route element={<User />} path="user">
             <Route path="pofile" element={<UserProfile />} />
+            {/* <Route path="header" element={<Header />} /> */}
+            <Route path="addartwork" element={<AddArtwork />} />
+            <Route path="manageArtwork" element={<ManageArtwork />} />
           
           </Route>
 
