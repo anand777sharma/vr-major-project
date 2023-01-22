@@ -3,6 +3,7 @@ const express = require('express');
 const userRouter = require('./routers/userRouter');
 const artRouter = require('./routers/artRouter');
 const utilRouter = require('./routers/util');
+const ExhibitionRouter = require('./routers/ExhibitionRouter');
 const cors = require('cors');
 
 // initiliazing express
@@ -16,8 +17,11 @@ app.use(express.json());
 app.use(cors( { origin : [ 'http://localhost:3000' ] } ));
 
 app.use('/user', userRouter);
-app.use('/art', artRouter);
+app.use('/artwork', artRouter);
 app.use('/util', utilRouter);
+app.use("/exhibition", ExhibitionRouter);
+
+app.use(express.static('./static'));
 
 // route
 app.get( '/', (req, res) => {

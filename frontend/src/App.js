@@ -16,6 +16,7 @@ import ManageUser from './components/admin/ManageUser';
 import AddArtwork from './components/user/AddArtwork';
 import ManageArtwork from './components/user/ManageArtwork';
 import ContactUs from './components/main/ContactUs';
+import ManageExhibition from './components/user/ManageExhibition';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
             <Route path="pofile" element={<UserProfile />} />
             <Route path="addartwork" element={<AddArtwork />} />
             <Route path="manageArtwork" element={<ManageArtwork />} />
+            <Route path="manageexhibition" element={<ManageExhibition />} />
           
           </Route>
 

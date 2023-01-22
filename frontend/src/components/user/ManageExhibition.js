@@ -8,7 +8,7 @@ import app_config from "../../config";
 import UpdateExhibition from "./exhibitionupdate";
 
 const ManageExhibition = () => {
-  const url = app_config.backend_url;
+  const url = app_config.api_url;
   const [selImage, setSelImage] = useState("");
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(sessionStorage.getItem("user"))

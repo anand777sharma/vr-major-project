@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
 const AddArtwork = () => {
-  const url = app_config.backend_url;
+  const url = app_config.api_url;
   const [selImage, setSelImage] = useState("");
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(sessionStorage.getItem("user"))

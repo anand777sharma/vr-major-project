@@ -5,7 +5,7 @@ import app_config from "../../config";
 import UpdateArtwork from "./artworkupdate";
 
 const ManageArtworks = () => {
-  const url = app_config.backend_url;
+  const url = app_config.api_url;
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(sessionStorage.getItem("user"))
   );
