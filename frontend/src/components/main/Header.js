@@ -19,6 +19,14 @@ const Header = () => {
         <i className="fas fa-bars" />
       </button>
       <div className="collapse navbar-collapse" id="navbarExample01">
+      <a class="navbar-brand mt-2 mt-lg-0" href="#">
+        <img
+          src={'logo.png'}
+          height="30"
+          alt="MDB Logo"
+          loading="lazy"
+        />
+      </a>
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
             <NavLink className="nav-link" to="/main/home">
