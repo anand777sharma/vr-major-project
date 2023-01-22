@@ -15,6 +15,7 @@ import ManageUser from './components/admin/ManageUser';
 // 
 import AddArtwork from './components/user/AddArtwork';
 import ManageArtwork from './components/user/ManageArtwork';
+import ContactUs from './components/main/ContactUs';
 
 function App() {
   return (
@@ -27,19 +28,18 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="home" element={<Home />} />
+            <Route path="contactus" element={<ContactUs />} />
           </Route>
           
           <Route element={<Admin />} path="admin">
             <Route path="pofile" element={<AdminProfile />} />
             <Route path="dashboard" element={<Dashboard />} />
-            {/* <Route path="header" element={<Header />} /> */}
             <Route path="manageUser" element={<ManageUser />} />
           
           </Route>
           
           <Route element={<User />} path="user">
             <Route path="pofile" element={<UserProfile />} />
-            {/* <Route path="header" element={<Header />} /> */}
             <Route path="addartwork" element={<AddArtwork />} />
             <Route path="manageArtwork" element={<ManageArtwork />} />
           
