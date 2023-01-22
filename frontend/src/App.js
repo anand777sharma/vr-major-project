@@ -7,7 +7,7 @@ import Signup from './components/main/Signup';
 import Admin from './components/admin';
 import User from './components/user';
 import AdminProfile from './components/admin/Profile';
-import UserProfile from './components/user/Profile';
+import UserProfile from './components/user/profile';
 import Home from './components/main/Home';
 import Dashboard from './components/admin/Dashboard';
 // 

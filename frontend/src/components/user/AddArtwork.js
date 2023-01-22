@@ -1,87 +1,148 @@
-import { Formik } from 'formik';
-import React, { useState } from 'react'
-import Swal from 'sweetalert2';
-import app_config from '../../config';
+import { Button, TextField } from "@mui/material";
+import { Formik } from "formik";
+import React, { useState } from "react";
+// import Swal from "sweetalert2";
+import * as Yup from "yup";
+import app_config from "../../config";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const AddArtwork = () => {
+  const url = app_config.backend_url;
+  const [selImage, setSelImage] = useState("");
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(sessionStorage.getItem("user"))
+  );
+  const navigate = useNavigate();
 
-    const url = app_config.api_url;
+  const userForm = {
+    title: "",
+    image: "",
+    description: "",
+    price: "",
+    artist: currentUser._id,
+    createdAt: new Date(),
+  };
 
-    const [selImage, setSelImage] = useState("");
+  const userSubmit = (formdata) => {
+    formdata.image = selImage;
+    console.log(formdata);
 
-    const userSubmit = async (formdata) => {
-        formdata.image = selImage;
-        console.log(formdata);
-        // 1. Url
-        // 2. Request Method
-        // 3. Data
-        // 4. Data Format
-
-        // to send request on backend - to connect frontend and backend.
-        const response = await fetch(url+'/art/add', {
-            method : 'POST',
-            body : JSON.stringify(formdata),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
+    fetch(url + "/artwork/add", {
+      method: "POST",
+      body: JSON.stringify(formdata),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        res.json().then((data) => {
+          console.log(data);
+          Swal.fire({
+            icon: "success",
+            title: "Artwork Added!!",
+          }).then(() => {
+            navigate("/user/manageartwork");
+          });
         });
+      }
+    });
+  };
 
-        if(response.status === 200){
-            console.log('artwork added');
-            Swal.fire({
-                icon : 'success',
-                title : 'Well Done',
-                text : 'Artwork added Successfuly'
-            })
-        }
-    }
-
-    const uploadImage = (e) => {
-        const file = e.target.files[0];
-        const fd = new FormData();
-        setSelImage(file.name);
-        fd.append("myfile", file);
-        fetch(url + "/util/uploadfile", {
-          method: "POST",
-          body: fd,
-        }).then((res) => {
-          if (res.status === 200) {
-            console.log("file uploaded");
-          }
+  const uploadFile = (e) => {
+    const file = e.target.files[0];
+    setSelImage(file.name);
+    const fd = new FormData();
+    fd.append("myfile", file);
+    fetch(url + "/util/uploadfile", {
+      method: "POST",
+      body: fd,
+    }).then((res) => {
+      if (res.status === 200) {
+        toast.success("Image Uploaded!!", {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+          },
         });
-      };
+      }
+    });
+  };
 
   return (
-    <div>
-        <div className="container pt-5">
-            <div className="card">
-                <div className="card-body">
-                    <Formik 
-                    initialValues={{title : '', discription : '', owner : '', price : '', category : ''}}
-                    onSubmit={userSubmit}>
-                        {({values, handleSubmit, handleChange}) => (
-                            <form onSubmit={handleSubmit}>
-                                <label>Title</label>
-                                <input className='form-control' id="title" onChange={handleChange} value={values.title} />
-                                <label>Discription</label>
-                                <input className='form-control' id="discription" onChange={handleChange} value={values.discription} />
-                                <label>owner</label>
-                                <input className='form-control' id="owner" onChange={handleChange} value={values.owner} />
-                                <label>Price</label>
-                                <input className='form-control' id="price" onChange={handleChange} value={values.price} />
-                                <label>Category</label>
-                                <input className='form-control' id="category" onChange={handleChange} value={values.category} />
-                                <label>Upload File</label>
-                                <input className='form-control' onChange={uploadImage} type="file" />
-                            <button type="submit" className='btn btn-primary mt-4'>Submit</button>
-                            </form>
-                        )}
-                    </Formik>
+    <div
+      style={{
+        height: "100vh",
+        padding: "2rem",
+        background:
+          "linear-gradient(to right, #fff3, #fff3), url(https://wallpaperaccess.com/full/3899650.jpg)",
+      }}
+    >
+      <div className="container">
+        <div className="row justify-content-center h-100">
+          <div className="col-md-7">
+            <Formik initialValues={userForm} onSubmit={userSubmit}>
+              {({ values, handleSubmit, handleChange, errors, touched }) => (
+                
+                <div className="card " style={{background: "url(https://niemvuilaptrinh.ams3.cdn.digitaloceanspaces.com/background-css-javascript/CSS%20background%20Animation.png)",backgroundRepeat:"no-repeat" ,backgroundSize:"cover", backgroundPosition:"center"}}>
+                  <div className="card-header">
+                    <h2>Add New Artwork Here</h2>
+                  </div>
+                  <div className="card-body">
+                    <form onSubmit={handleSubmit}>
+                      <TextField
+                        variant="standard"
+                        className="mt-4 w-100"
+                        label="Title"
+                        id="title"
+                        onChange={handleChange}
+                        value={values.title}
+                      />
+                      <TextField
+                        variant="standard"
+                        className="mt-4 w-100"
+                        label="Price"
+                        id="price"
+                        onChange={handleChange}
+                        value={values.price}
+                      />
+
+                      <TextField
+                        variant="standard"
+                        className="mt-4 w-100"
+                        label="Description"
+                        id="description"
+                        multiline
+                        rows={4}
+                        onChange={handleChange}
+                        value={values.description}
+                      />
+                      <input
+                        type="file"
+                        className="mt-4 form-control"
+                        onChange={uploadFile}
+                      />
+
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        className="float-end mt-5"
+                      >
+                        Add Artwork
+                      </Button>
+                    </form>
+                  </div>
                 </div>
-            </div>
+              )}
+            </Formik>
+          </div>
+          {/* <div className="col-md-5"></div> */}
         </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default AddArtwork;

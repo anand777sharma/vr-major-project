@@ -1,51 +1,43 @@
-// to process user requests only
+// to perform database operations on the user data
 const express = require('express');
 const router = express.Router();
 const Model = require('../models/userModel');
 
-// Response Codes
-// 200 - Successfull
-// 400 - Client Side Error
-// 500 - Server Side Error
-
 router.post('/add', (req, res) => {
     console.log(req.body);
-    
-    // asynchronous functions
+
+    // storing the data in the database
     new Model(req.body).save()
     .then((result) => {
-        console.log(result);
         res.json(result);
     })
     .catch((err) => {
-        console.log(err);
         res.status(500).json(err);
     });
 })
 
 router.get('/getall', (req, res) => {
-
+    // reading the data from the database
     Model.find({})
     .then((result) => {
-        console.log(result);
         res.json(result);
-    }).catch((err) => {
-        console.log(err);
-        res.json(err);
+    })
+    .catch((err) => {
+        res.status(500).json(err);
     });
+});
 
-})
-
+// : denotes url paramter
 router.get('/getbyemail/:email', (req, res) => {
-    console.log(req.params.email);
 
-    Model.find({ email : req.params.email })
+    Model.find({email : req.params.email })
     .then((result) => {
         res.json(result);
-    }).catch((err) => {
-        res.json(err);
+    })
+    .catch((err) => {
+        res.status(500).json(err);
     });
-})
+});
 
 router.delete('/delete/:id', (req, res) => {
     Model.findByIdAndDelete(req.params.id)
@@ -57,13 +49,30 @@ router.delete('/delete/:id', (req, res) => {
 })
 
 router.put('/update/:id', (req, res) => {
-    Model.findByIdAndUpdate(req.params.id, req.body)
+    Model.findByIdAndUpdate(req.params.id, req.body, {new : true})
     .then((result) => {
         res.json(result);
     }).catch((err) => {
         res.status(500).json(err);
     });
 })
+
+router.post("/authenticate", (req, res) => {
+    const formdata = req.body;
+    Model.findOne({ email: formdata.email, password: formdata.password })
+      .then((result) => {
+        if (result) {
+          // user exists in database
+          res.status(200).json(result);
+        } else {
+          res.status(400).json(result);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).json(err);
+      });
+  });
 
 
 module.exports = router;

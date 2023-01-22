@@ -1,79 +1,167 @@
-import React, { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import { Card, CardContent, CardMedia } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import app_config from "../../config";
+import UpdateArtwork from "./artworkupdate";
 
-const ManageArtwork = () => {
+const ManageArtworks = () => {
+  const url = app_config.backend_url;
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(sessionStorage.getItem("user"))
+  );
 
-    const [artList, setArtList] = useState([]);
+  const [artworkList, setArtworkList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const [updateFormData, setUpdateFormData] = useState(null);
 
-    const getDataFromBackend = async() => {
-        const response = await fetch('http://localhost:5000/art/getall')
-        
-        const data = await response.json()
+  const fetchData = () => {
+    fetch(url + "/artwork/getbyuser/" + currentUser._id).then((res) => {
+      if (res.status === 200) {
+        res.json().then((data) => {
+          console.log(data);
+          setArtworkList(data);
+          setLoading(false);
+        });
+      }
+    });
+  };
+
+  const deleteData = (id) => {
+    fetch(url + "/artwork/delete/" + id, { method: "DELETE" })
+      .then((res) => res.json())
+      .then((data) => {
         console.log(data);
-        setArtList(data);
-    };
+        fetchData();
+        toast.success("Successfully Deleted!!", {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+          },
+        });
+      });
+  };
 
-    const deleteArtwork = async(id) =>{
-        console.log(id);
-         const response = await fetch('http://localhost:5000/art/delete/'+id, {
-           method : 'DELETE' 
-         })
-         console.log(response.status);
-         getDataFromBackend();
-         toast.success('Artwork Deleted 😎');
+  const UpdateArt = (userdata) => {
+    // change the value of showUpdateForm to true
+    setShowUpdateForm(true);
+    // update the userFormData
+    setUpdateFormData(userdata);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const showData = () => {
+    if (!loading) {
+      return artworkList.map(
+        ({ _id, title, image, description, price, createdAt }) => (
+          <div className="col-md-4 mt-5">
+            <Card>
+              <CardMedia
+                component="img"
+                image={url + "/uploads/" + image}
+                alt={title}
+                height="300"
+              />
+              <CardContent className="card-body text-center">
+                <h6 className="text-muted" height="30">
+                  {title}
+                </h6>
+                <button
+                  className="btn btn-primary me-2"
+                  onClick={(e) =>
+                    UpdateArt({
+                      _id,
+                      title,
+                      image,
+                      description,
+                      price,
+                      createdAt,
+                    })
+                  }
+                >
+                  <i class="fas fa-pen"></i> Edit
+                </button>
+                <button
+                  className="btn btn-danger "
+                  onClick={(e) => deleteData(_id)}
+                >
+                  <i class="fas fa-trash"></i> Delete
+                </button>
+              </CardContent>
+            </Card>
+          </div>
+        )
+      );
     }
+  };
 
-    useEffect(() => {
-        getDataFromBackend();
-    }, []);
+  const addFile = (e) => {
+    const file = e.target.files[0];
+    const formdata = new FormData();
+    formdata.append("myfile", file);
 
-    const displayArtwork = () => {
-      return <table className='table table-striped table-light'>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Owner</th>
-                <th>Price</th>
-                <th>image</th>
-                <th>CreatedAT</th>
-                <th>Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            {
-                artList.map((artwork) => (
-                    <tr>
-                    <td>{artwork._id}</td>                    
-                    <td>{artwork.title}</td>                    
-                    <td>{artwork.description}</td>                    
-                    <td>{artwork.owner}</td>                    
-                    <td>{artwork.price}</td>                    
-                    <td>{artwork.image}</td>                    
-                    <td>{artwork.createdAt}</td>                    
-                    <td>{artwork.category}</td>                    
+    fetch(url + "/util/uploadfile", {
+      method: "POST",
+      body: formdata,
+    }).then((res) => {
+      if (res.status === 200) {
+        fetch(url + "/artwork/add", {
+          method: "POST",
+          body: {
+            file: file.name,
+            createdBy: currentUser._id,
+            createdAt: new Date(),
+          },
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then((res) => {
+          if (res.status === 200) {
+            console.log("asset added");
+          }
+        });
+      }
+    });
+  };
 
-                    <td>
-                        <button className='btn btn-danger' onClick={() => {deleteArtwork(artwork._id)}}>
-                         <i className='fas fa-pen' />
-                        </button>
-                    </td>
-                </tr>
-                ))
-            }
-        </tbody>
-      </table>
-    }
-    return (
-        <div className='container-fluid'>
-            <h1 className='text-center'>Artwork Manager</h1>
-            <hr/>
-            <div className='row'>
-                <div className='col-md'>
-                    {displayArtwork()}
-                </div>
-             </div>
+  return (
+    <div
+      style={{
+        height: "100vh",
+        padding: "2rem",
+        background:
+          "linear-gradient(to right, #fff3, #fff3), url(https://wallpaperaccess.com/full/3899650.jpg)",
+      }}
+    >
+      <div className="container">
+        <h1 className="text-white">Manage Artworks</h1>
+        <hr />
+
+        <div className="row">
+          <div className="col-md-8">{showData()}</div>
+          <div className="col-md-4">
+            <div className="card">
+              <div className="card-body">
+                {showUpdateForm ? (
+                  <UpdateArtwork
+                    userForm={updateFormData}
+                    loadDataFromBackend={fetchData}
+                    showForm={setShowUpdateForm}
+                  ></UpdateArtwork>
+                ) : (
+                  <h3 className="text-muted">Select User to Update</h3>
+                )}
+              </div>
             </div>
-    )
-}
-export default ManageArtwork;
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ManageArtworks;

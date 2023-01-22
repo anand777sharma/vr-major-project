@@ -1,16 +1,48 @@
 import { Formik } from 'formik';
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Login = () => {
 
-  // 1. submit function
-  const loginSubmit = (formdata) => {
-    console.log(formdata);
+  const navigate = useNavigate();
 
-    // instructions to store data in database
+  const loginSubmit = async (formdata) => {
+    console.log(formdata);
+    const response = await fetch("http://localhost:5000/user/authenticate", {
+      method: "POST",
+      body: JSON.stringify(formdata),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 200) {
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "You have successfully logged in",
+      });
+      const data = await response.json();
+      console.log(data);
+      // setLoggedIn(true)
+      // this will store user data in session
+      if (data.isAdmin) {
+        sessionStorage.setItem("admin", JSON.stringify(data));
+        navigate("/admin/manageuser");
+      } else {
+        sessionStorage.setItem("user", JSON.stringify(data));
+        navigate("/user/manageArtwork");
+      }
+    } else if (response.status === 400) {
+      Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: "Invalid Credentials",
+      });
+    }
+    
   }
-  // 2. locate/created the form tag
-  // 3. use Formik on form tag
 
   return (
     <section className="vh-100" style={{ backgroundColor: "#508bfc" }}>
