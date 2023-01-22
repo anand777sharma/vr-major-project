@@ -19,7 +19,7 @@ const Login = () => {
           <div className="col-12 col-md-8 col-lg-6 col-xl-5">
             <div className="card shadow-2-strong" style={{ borderRadius: "1rem" }}>
               <div className="card-body p-5 text-center">
-                <h3 className="mb-5">Sign in</h3>
+                <h3 className="mb-5">Log in</h3>
 
                 <Formik initialValues={{ email: '', password: '' }} onSubmit={loginSubmit}>
                   {({ values, handleSubmit, handleChange }) => (

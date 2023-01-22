@@ -17,7 +17,7 @@ const Home = () => {
     <div className="mask" style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}>
       <div className="d-flex justify-content-center  align-items-center h-100">
         <div className="text-white">
-          <h1 className="mb-3">Heading</h1>
+          <h1 className="mb-3">VR-ART EXHIBITION</h1>
           <h4 className="mb-3 ">VR-All-Art is a platform that allows you to effortlessly establish
            Virtual Reality exhibits and sell artworks without regard for time, location, or country.</h4>
           <a className="btn btn-outline-light btn-lg" href="#!" role="button">
