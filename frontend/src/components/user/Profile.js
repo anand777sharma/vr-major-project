@@ -98,94 +98,94 @@ const Profile = (props) => {
   };
 
   return (
-    <div 
-    style={{
-      height: "100vh",
-      padding: "2rem",
-      background:
-        "linear-gradient(to right, #fff3, #fff3), url(https://wallpaperaccess.com/full/3899650.jpg)",
-    }}
+    <div
+      style={{
+        height: "100vh",
+        padding: "2rem",
+        background:
+          "linear-gradient(to right, #fff3, #fff3), url(https://wallpaperaccess.com/full/3899650.jpg)",
+      }}
     >
-    <div className="col-md-10 mx-auto">
-      <Card style={{background: "url(https://niemvuilaptrinh.ams3.cdn.digitaloceanspaces.com/background-css-javascript/CSS%20background%20Animation.png)",backgroundRepeat:"no-repeat" ,backgroundSize:"cover", backgroundPosition:"center"}}>
-        <CardContent>
-          <div className="row">
-            <h1 className="text-center">Manage Profile</h1>
-            <div className="col-md-4">
-              <img
-                src={
-                  url +
-                  "/uploads/" +
-                  (currentUser.avatar
-                    ? currentUser.avatar
-                    : "avatar_image.webp")
-                }
-                className="img-fluid"
-                alt=""
-              />
-              <br />
-              <label className="mt-3">Change Image</label>
-              <input
-                className="form-control"
-                type="file"
-                onChange={uploadThumbnail}
-              />
-            </div>
-            <div className="col-md-8">
-              <Formik
-                enableReinitialize={true}
-                initialValues={currentUser}
-                onSubmit={onFormSubmit}
-              >
-                {({ values, handleChange, handleSubmit, isSubmitting }) => (
-                  <form onSubmit={handleSubmit}>
-                    <TextField
-                      className="mt-4 w-100"
-                      label="Full Name"
-                      variant="filled"
-                      name="fullname"
-                      onChange={handleChange}
-                      value={values.fullname}
-                    />
-                    <TextField
-                      className="mt-4 w-100"
-                      label="Email"
-                      variant="filled"
-                      name="email"
-                      onChange={handleChange}
-                      value={values.email}
-                    />
-                    <TextField
-                      className="mt-4 w-100"
-                      label="Age"
-                      variant="filled"
-                      name="age"
-                      onChange={handleChange}
-                      value={values.age}
-                    />
-                    <TextField
-                      className="mt-4 w-100"
-                      type="text"
-                      label="Password"
-                      name="password"
-                      variant="filled"
-                      onChange={handleChange}
-                      value={values.password}
-                    />
+      <div className="col-md-10 mx-auto">
+        <Card style={{ background: "url(https://niemvuilaptrinh.ams3.cdn.digitaloceanspaces.com/background-css-javascript/CSS%20background%20Animation.png)", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center" }}>
+          <CardContent>
+            <div className="row">
+              <h1 className="text-center">Manage Profile</h1>
+              <div className="col-md-4">
+                <img
+                  src={
+                    url +
+                    "/uploads/" +
+                    (currentUser.avatar
+                      ? currentUser.avatar
+                      : "avatar_image.webp")
+                  }
+                  className="img-fluid"
+                  alt=""
+                />
+                <br />
+                <label className="mt-3">Change Image</label>
+                <input
+                  className="form-control"
+                  type="file"
+                  onChange={uploadThumbnail}
+                />
+              </div>
+              <div className="col-md-8">
+                <Formik
+                  enableReinitialize={true}
+                  initialValues={currentUser}
+                  onSubmit={onFormSubmit}
+                >
+                  {({ values, handleChange, handleSubmit, isSubmitting }) => (
+                    <form onSubmit={handleSubmit}>
+                      <TextField
+                        className="mt-4 w-100"
+                        label="Full Name"
+                        variant="filled"
+                        name="fullname"
+                        onChange={handleChange}
+                        value={values.fullname}
+                      />
+                      <TextField
+                        className="mt-4 w-100"
+                        label="Email"
+                        variant="filled"
+                        name="email"
+                        onChange={handleChange}
+                        value={values.email}
+                      />
+                      <TextField
+                        className="mt-4 w-100"
+                        label="Age"
+                        variant="filled"
+                        name="age"
+                        onChange={handleChange}
+                        value={values.age}
+                      />
+                      <TextField
+                        className="mt-4 w-100"
+                        type="text"
+                        label="Password"
+                        name="password"
+                        variant="filled"
+                        onChange={handleChange}
+                        value={values.password}
+                      />
 
-                    <div className="text-center">
-                      <button className="btn btn-primary mt-5 w-100">
-                        Submit
-                      </button>
-                    </div>
-                  </form>
-                )}
-              </Formik>
+                      <div className="text-center">
+                        <button className="btn btn-primary mt-5 w-100">
+                          Submit
+                        </button>
+                      </div>
+                    </form>
+                  )}
+                </Formik>
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

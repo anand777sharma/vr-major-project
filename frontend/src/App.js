@@ -7,7 +7,7 @@ import Signup from './components/main/Signup';
 import Admin from './components/admin';
 import User from './components/user';
 import AdminProfile from './components/admin/Profile';
-import UserProfile from './components/user/profile';
+import UserProfile from './components/user/Profile';
 import Home from './components/main/Home';
 import Dashboard from './components/admin/Dashboard';
 // 
@@ -17,6 +17,7 @@ import AddArtwork from './components/user/AddArtwork';
 import ManageArtwork from './components/user/ManageArtwork';
 import ContactUs from './components/main/ContactUs';
 import ManageExhibition from './components/user/ManageExhibition';
+import Footer from './components/user/Footer';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
           
 
         </Routes>
+        <Footer/>
       </BrowserRouter>
     </div>
   );
