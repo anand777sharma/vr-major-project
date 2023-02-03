@@ -58,6 +58,11 @@ const Header = () => {
               Profile
             </NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/user/virtualreality">
+              Virtual Reality
+            </NavLink>
+          </li>
         </ul>
         {/* Left links */}
       </div>

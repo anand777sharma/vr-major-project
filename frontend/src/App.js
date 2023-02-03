@@ -18,6 +18,7 @@ import ManageArtwork from './components/user/ManageArtwork';
 import ContactUs from './components/main/ContactUs';
 import ManageExhibition from './components/user/ManageExhibition';
 import Footer from './components/user/Footer';
+import VirtualReality from './components/user/VirtualReality';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
             <Route path="addartwork" element={<AddArtwork />} />
             <Route path="manageArtwork" element={<ManageArtwork />} />
             <Route path="manageexhibition" element={<ManageExhibition />} />
+            <Route path="virtualreality" element={<VirtualReality />} />
           
           </Route>
 

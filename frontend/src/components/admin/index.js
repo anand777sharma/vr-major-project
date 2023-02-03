@@ -1,10 +1,12 @@
 import React from 'react'
 import Header from '../admin/Header';
+import Dashboard from './Dashboard';
 
 const Admin = () => {
   return (
-    <div>Admin
+    <div>
       <Header />
+      <Dashboard/>
     </div>
   )
 }
