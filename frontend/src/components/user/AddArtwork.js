@@ -1,7 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import { Formik } from "formik";
 import React, { useState } from "react";
-// import Swal from "sweetalert2";
 import * as Yup from "yup";
 import app_config from "../../config";
 import toast from "react-hot-toast";
@@ -85,8 +84,8 @@ const AddArtwork = () => {
           <div className="col-md-7">
             <Formik initialValues={userForm} onSubmit={userSubmit}>
               {({ values, handleSubmit, handleChange, errors, touched }) => (
-                
-                <div className="card " style={{background: "url(https://niemvuilaptrinh.ams3.cdn.digitaloceanspaces.com/background-css-javascript/CSS%20background%20Animation.png)",backgroundRepeat:"no-repeat" ,backgroundSize:"cover", backgroundPosition:"center"}}>
+
+                <div className="card " style={{ background: "url(https://niemvuilaptrinh.ams3.cdn.digitaloceanspaces.com/background-css-javascript/CSS%20background%20Animation.png)", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center" }}>
                   <div className="card-header">
                     <h2>Add New Artwork Here</h2>
                   </div>

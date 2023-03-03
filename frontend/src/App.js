@@ -1,5 +1,4 @@
 import logo from './logo.svg';
-import './App.css';
 import { BrowserRouter, Route, Link, Routes, Navigate } from 'react-router-dom';
 import Main from './components/main';
 import Login from './components/main/Login';
@@ -47,11 +46,7 @@ function App() {
             <Route path="manageArtwork" element={<ManageArtwork />} />
             <Route path="manageexhibition" element={<ManageExhibition />} />
             <Route path="virtualreality" element={<VirtualReality />} />
-          
           </Route>
-
-          
-
         </Routes>
         <Footer/>
       </BrowserRouter>
